@@ -1,0 +1,1 @@
+python tryon.py --config ./input/deep_autumn.json

@@ -1,0 +1,200 @@
+{
+  "name": "deep_autumn",
+  "system_prompt": "You are a photorealistic virtual try-on editor. Your job is to edit the user’s provided photo(s) by changing ONLY clothing, footwear, and optionally accessories, to match the outfit specification the user provides in their message.\n\nPRIMARY GOAL\n- Produce a realistic try-on that keeps the person’s identity intact and looks like a real photo.\n- The output must look natural: correct fit, drape, wrinkles, fabric texture, lighting, shadows, and perspective.\n\nIDENTITY + FACE PRESERVATION (HIGHEST PRIORITY)\n- Preserve the person’s face, head shape, hair, beard, skin tone, age appearance, and overall body proportions.\n- Do NOT beautify, slim, bulk up, change facial features, jawline, nose, lips, eyes, teeth, or skin texture beyond minimal noise matching.\n- Keep the person recognizable and consistent across variations.\n\nWHAT YOU MAY CHANGE\n- Clothing (tops, bottoms, outerwear), footwear, belts, bags, scarves, hats, watches, glasses.\n- You may adjust garment fit and length to match the requested silhouette.\n- You may minimally adjust background ONLY if needed to remove artifacts or to match lighting realism; otherwise keep original background.\n\nWHAT YOU MUST NOT CHANGE\n- The person’s pose, body shape, height, limb proportions, head size, hairstyle, beard style, or facial expression.\n- Skin color/tone, ethnicity, tattoos, scars, moles (unless the user explicitly asks to cover them with clothing).\n- Camera angle, focal length look, or overall photo realism.\n\nSILHOUETTE + FIT RULES (DEFAULT)\nUnless the user explicitly overrides:\n- Tops: structured, clean shoulder line; avoid oversized and avoid tight compression.\n- Bottoms: mid/high rise, straight-taper (athletic taper), no skinny.\n- Length: avoid “stacking” at the ankle; aim for no-break or slight-break depending on footwear.\n- Shirts/polos/tees: avoid overly long hem; balanced proportions for a 172 cm frame.\n\nCOLOR + STYLE RULES (DEFAULT: DEEP AUTUMN / FACE-FRIENDLY)\nUnless the user overrides:\n- Prefer warm/neutral-warm deep tones near the face: espresso, warm charcoal/graphite, deep olive/forest, ink-navy; accents: petrol/muted teal, warm burgundy/marsala, rust/terracotta, deep mustard.\n- Avoid near the face: icy pastels, cold light gray, neon, pure white (use ivory/ecru instead), harsh jet-black right at the face (use espresso/warm charcoal instead).\n- Keep finishes mostly matte or softly textured (not glossy).\n\nGARMENT REALISM REQUIREMENTS\n- Fabric must match garment type (e.g., oxford has visible weave; polo has knit texture; denim has twill; leather has grain; wool coat has felted texture).\n- Add natural wrinkles at elbows/waist/hips/knees; correct seam placement; correct collar shape; buttons aligned; placket and hems straight.\n- Logos: avoid unless the user explicitly asks for a specific brand logo.\n- Ensure layering is physically plausible (collars, cuffs, hems visible in correct order).\n- Ensure shoes sit correctly on the ground with consistent shadows.\n\nLIGHTING + SHADOWS\n- Match the original photo lighting direction, intensity, and color temperature.\n- Preserve and update shadows cast by garments (under chin, under jacket, around folds).\n- No artificial studio lighting unless the original photo has it.\n\nBACKGROUND HANDLING\n- Keep the original background by default.\n- If background causes edge artifacts, perform minimal cleanup only.\n- Do not add crowds, text, watermarks, or UI elements.\n\nOUTPUT\n- Provide a single final edited image per request unless the user asks for multiple.\n- If the user requests multiple variants, generate separate outputs with clearly different outfit changes (not just minor recolors).\n- Do not include explanations; do not provide analysis. Only return the final edited image(s).\n\nINPUT FORMAT (USER MESSAGE)\nThe user will provide:\n1) One or more photos for try-on\n2) A concrete outfit specification (items, colors, materials, and optional fit notes)\nYou must follow the outfit specification exactly. If a detail is missing, make the most conservative, realistic choice aligned with the defaults above.\n\nQUALITY CONTROL CHECKLIST (MUST PASS)\n- Identity preserved (face/hair/beard/body).\n- Outfit matches requested items and colors.\n- Fit matches the silhouette rules (unless overridden).\n- No warped limbs, broken hands, melting fabrics, or floating shoes.\n- Lighting/shadows consistent with the original photo.\n- No obvious cutout edges around collar, shoulders, arms, waist, or shoes.",
+  "input_image_path": "input/me.jpg",
+
+  "model": "chatgpt-image-latest",
+  "size": "auto",
+  "quality": "high",
+  "output_format": "png",
+  "input_fidelity": "high",
+
+  "output_dir": "renders",
+
+  "parallel": {
+    "max_workers": 4,
+    "max_concurrent_requests": 2,
+    "min_interval_ms": 900
+  },
+
+  "retries": {
+    "max_retries": 4,
+    "base_delay_s": 1.0,
+    "max_delay_s": 20.0
+  },
+
+  "jobs": [
+    {
+      "name": "gym_basic_graphite_olive",
+      "user_message": "Try-on request (use my attached photo). Keep my face, hair, beard, body shape, skin tone, and pose unchanged. Change ONLY clothing/footwear. Photorealistic, no logos, match original lighting/shadows, keep original background.\n\nOUTFIT (Gym — Basic):\n- Top: TECH T-SHIRT in GRAPHITE (warm dark gray), matte performance fabric, athletic fit but not tight/compressive, clean shoulder line.\n- Bottom: training SHORTS in OLIVE (warm olive green), matte performance fabric, above-knee length, not baggy.\n- Footwear: TRAINING SHOES for gym (cross-training style), neutral colors (black/charcoal/white mix is ok), realistic sole and ground shadow.\n\nQUALITY:\n- Realistic technical fabric texture and subtle stretch.\n- No branding/logos, no extra accessories.\n- No body reshaping, no face edits."
+    },
+    {
+      "name": "gym_basic_all_graphite",
+      "user_message": "Try-on request (use my attached photo). Preserve identity and pose. Change ONLY clothing/footwear. Photorealistic, no logos, match original lighting/shadows, keep background.\n\nOUTFIT (Gym — Basic all-graphite):\n- Tech T-shirt: GRAPHITE.\n- Training shorts: GRAPHITE.\n- Gym training shoes: neutral, cross-training style."
+    },
+    {
+      "name": "gym_warmup_olive_graphite_inknavy",
+      "user_message": "Try-on request (use my attached photo). Keep my face, hair, beard, body shape, skin tone, and pose unchanged. Change ONLY clothing/footwear. Photorealistic, no logos, match original lighting/shadows, keep original background.\n\nOUTFIT (Gym — Warm-up / Cool):\n- Base top: TECH T-SHIRT in OLIVE (warm olive green), matte performance fabric, athletic fit but not tight.\n- Bottom: JOGGERS in GRAPHITE (warm dark gray), tapered leg, no ankle stacking.\n- Outer layer: lightweight TRACK JACKET (olympiyka) in INK-NAVY (deep warm navy), matte technical fabric, minimal design, worn unzipped or half-zipped (choose most realistic).\n- Footwear: gym training shoes (cross-training style), neutral colors.\n\nQUALITY:\n- Realistic layering (tee + jacket), natural folds at elbows/waist/knees.\n- No logos, no extra accessories.\n- No body/face modifications."
+    },
+    {
+      "name": "winter_coworking_a0",
+      "user_message": "Try-on request (use my attached photo). Keep my face, hair, beard, body shape, skin tone, and pose unchanged. Change ONLY clothing/footwear. Photorealistic, no logos, match original lighting/shadows, keep original background.\n\nOUTFIT (Winter / Coworking — A0):\n- Outerwear: short warm puffer jacket (hip-length, not long) in INK-NAVY, matte, structured enough to keep shape.\n- Top: polo shirt in ESPRESSO (dark warm brown), matte knit, structured collar, 2–3 button placket, top button open (V-line).\n- Bottom: chinos in STONE/GREIGE (warm light gray-beige), mid/high rise, straight-taper, correct length without ankle stacking.\n- Footwear: winter boots OR Chelsea boots in DARK BROWN leather with a clearly visible GRIPPY WINTER SOLE (treaded rubber outsole). No smooth sole.\n\nQUALITY:\n- Realistic puffer quilting, knit texture, chinos weave; natural wrinkles.\n- No body reshaping, no face edits, no extra accessories."
+    },
+    {
+      "name": "winter_coworking_a1",
+      "user_message": "Try-on request (use my attached photo). Preserve identity and pose. Change ONLY clothing/footwear. Photorealistic, no logos, match original lighting/shadows, keep background.\n\nOUTFIT (Winter / Coworking — A1):\n- Outerwear: short warm puffer jacket (hip-length) in DEEP OLIVE, matte.\n- Top: thick knit sweater in CAMEL (matte, medium-to-thick knit, clean fit).\n- Bottom: chinos STONE/GREIGE, mid/high rise, straight-taper, no ankle stacking.\n- Footwear: dark brown winter boots or Chelsea boots with grippy treaded sole."
+    },
+    {
+      "name": "winter_coworking_a2_structure",
+      "user_message": "Try-on request (use my attached photo). Preserve identity and pose. Change ONLY clothing/footwear. Photorealistic, no logos, match original lighting/shadows, keep background.\n\nOUTFIT (Winter / Coworking — A2 Structure layer):\n- Outerwear: short warm puffer jacket in INK-NAVY, matte.\n- Mid layer under puffer: structured overshirt in ESPRESSO (worn open or lightly closed), matte, adds shoulder structure.\n- Base layer: polo in ESPRESSO (or keep it slightly visible under the overshirt), top button open (V-line).\n- Bottom: chinos STONE/GREIGE, straight-taper, correct length.\n- Footwear: dark brown winter boots or Chelsea boots with grippy treaded sole."
+    },
+    {
+      "name": "winter_city_b0",
+      "user_message": "Try-on request (use my attached photo). Keep my identity and pose unchanged. Change ONLY clothing/footwear/accessories. Photorealistic, no logos, match original lighting/shadows, keep original background.\n\nOUTFIT (Winter / Casual city — B0):\n- Outerwear: warm puffer jacket in DEEP OLIVE, matte (hip-length or slightly longer but not knee-length).\n- Mid layer: CAMEL knit sweater (matte, medium-thick knit, clean fit).\n- Bottom: DARK INDIGO jeans (no heavy fading), mid/high rise, straight-taper, correct length without ankle stacking.\n- Footwear: DARK BROWN winter boots with clearly visible GRIPPY treaded sole.\n- Accessories: beanie in WARM GRAPHITE (warm dark gray, matte). No other accessories."
+    },
+    {
+      "name": "winter_city_b1_gloves",
+      "user_message": "Try-on request (use my attached photo). Preserve identity and pose. Change ONLY clothing/footwear/accessories. Photorealistic, no logos, match original lighting/shadows, keep background.\n\nOUTFIT (Winter / Casual city — B1):\n- Outerwear: deep olive puffer (matte).\n- Mid layer: camel knit sweater.\n- Bottom: DEEP OLIVE chinos, mid/high rise, straight-taper, correct length.\n- Footwear: dark brown winter boots with grippy treaded sole.\n- Accessories: warm graphite beanie + ESPRESSO leather gloves (dark warm brown). No other accessories."
+    },
+    {
+      "name": "winter_date_c0",
+      "user_message": "Try-on request (use my attached photo). Keep my face, hair, beard, body shape, skin tone, and pose unchanged. Change ONLY clothing/footwear/accessories. Photorealistic, no logos, match original lighting/shadows, keep original background.\n\nOUTFIT (Winter / Date — C0):\n- Outerwear: WARM CHARCOAL overcoat (matte wool texture, structured shoulders; length around knee or slightly above).\n- Top: polo shirt in PETROL (deep muted teal), matte knit, structured collar, top button open (V-line).\n- Bottom: trousers in WARM GRAPHITE (wool-blend look), mid/high rise, straight-taper.\n- Shoes: DARK BROWN leather DERBIES or DARK BROWN Chelsea boots (choose whichever looks most realistic), with a winter-appropriate rubber sole (not smooth).\n- Accessory: CAMEL scarf (matte, natural drape). No other accessories."
+    },
+    {
+      "name": "winter_date_c1_verycold",
+      "user_message": "Try-on request (use my attached photo). Preserve identity and pose. Change ONLY clothing/footwear/accessories. Photorealistic, no logos, match original lighting/shadows, keep background.\n\nOUTFIT (Winter / Date — C1 Very cold layering):\n- Outerwear: warm charcoal overcoat (structured, matte wool).\n- Layering under coat (not bulky):\n  - Base: thin knit sweater in CAMEL (fine-gauge knit, close but not tight).\n  - Mid layer: structured overshirt in ESPRESSO worn open (adds structure, not oversized).\n- Bottom: warm graphite trousers, mid/high rise, straight-taper.\n- Shoes: dark brown Chelsea boots or derbies with winter rubber sole (tread visible).\n- Accessory: camel scarf. No other accessories."
+    },
+    {
+      "name": "spring_coworking_a0",
+      "user_message": "Try-on request (use my attached photo). Keep my face, hair, beard, body shape, skin tone, and pose unchanged. Change ONLY clothing/footwear. Photorealistic, no logos, match original lighting/shadows, keep original background.\n\nOUTFIT (Spring / Coworking — A0):\n- Overshirt: ESPRESSO (dark warm brown), matte, structured shoulders, worn open.\n- T-shirt: IVORY (not pure white), matte, tidy fit (not oversized, not tight).\n- Chinos: STONE/GREIGE (warm light gray-beige), mid/high rise, straight-taper, correct shortened length with no ankle stacking.\n- Shoes: clean WHITE minimalist leather sneakers (very clean, low profile).\n\nQUALITY:\n- Realistic textures (overshirt weave, cotton tee, chinos twill) + natural wrinkles.\n- No body reshaping, no face edits, no extra accessories."
+    },
+    {
+      "name": "spring_coworking_a1",
+      "user_message": "Try-on request (use my attached photo). Preserve identity and pose. Change ONLY clothing/footwear. Photorealistic, no logos, match original lighting/shadows, keep background.\n\nOUTFIT (Spring / Coworking — A1):\n- Overshirt: WARM GRAPHITE (warm dark gray), matte, structured, worn open.\n- T-shirt: OLIVE (warm olive green), matte, tidy fit.\n- Chinos: STONE/GREIGE, mid/high rise, straight-taper, correct length with no ankle stacking.\n- Shoes: clean WHITE minimalist leather sneakers."
+    },
+    {
+      "name": "spring_city_b0",
+      "user_message": "Try-on request (use my attached photo). Keep my identity and pose unchanged. Change ONLY clothing/footwear. Photorealistic, no logos, match original lighting/shadows, keep original background.\n\nOUTFIT (Spring / Casual city — B0):\n- Outerwear: FIELD JACKET in DEEP OLIVE (matte, structured, practical pockets).\n- Top: polo shirt in PETROL / MUTED TEAL (deep muted teal), matte knit, structured collar, 2–3 button placket, top button open (V-line).\n- Bottom: DARK INDIGO jeans (no heavy fading), mid/high rise, straight-taper, correct length without ankle stacking.\n- Shoes: clean WHITE minimalist leather sneakers (low profile)."
+    },
+    {
+      "name": "spring_city_b1",
+      "user_message": "Try-on request (use my attached photo). Preserve identity and pose. Change ONLY clothing/footwear. Photorealistic, no logos, match original lighting/shadows, keep background.\n\nOUTFIT (Spring / Casual city — B1):\n- Outerwear: field jacket in DEEP OLIVE (matte, structured).\n- Top: polo shirt in ESPRESSO (dark warm brown), matte knit, structured collar, top button open.\n- Bottom: chinos in DEEP OLIVE, mid/high rise, straight-taper, correct length without ankle stacking.\n- Shoes: clean WHITE minimalist leather sneakers."
+    },
+    {
+      "name": "spring_date_c0",
+      "user_message": "Try-on request (use my attached photo). Keep my face, hair, beard, body shape, skin tone, and pose unchanged. Change ONLY clothing/footwear. Photorealistic, no logos, match original lighting/shadows, keep original background.\n\nOUTFIT (Spring / Date — C0):\n- Outerwear: WARM CHARCOAL overcoat (matte wool texture, structured shoulders; length around knee or slightly above).\n- Top: polo shirt in ESPRESSO (dark warm brown), matte knit, structured collar, top button open (V-line).\n- Bottom: trousers in WARM GRAPHITE (wool-blend look), mid/high rise, straight-taper.\n- Shoes: DARK BROWN leather DERBIES or DARK BROWN leather LOAFERS (choose whichever looks most realistic with my stance).\n- Accessories: none."
+    },
+    {
+      "name": "spring_date_c1",
+      "user_message": "Try-on request (use my attached photo). Preserve identity and pose. Change ONLY clothing/footwear/accessories. Photorealistic, no logos, match original lighting/shadows, keep background.\n\nOUTFIT (Spring / Date — C1):\n- Outerwear: warm charcoal overcoat (structured, matte wool).\n- Top: polo shirt in PETROL / MUTED TEAL (deep muted teal), matte knit, structured collar, top button open.\n- Bottom: warm graphite trousers, mid/high rise, straight-taper.\n- Shoes: dark brown derbies OR loafers (most realistic for my stance).\n- Accessory: CAMEL scarf (matte, natural drape). No other accessories."
+    },
+    {
+      "name": "spring_date_c2",
+      "user_message": "Try-on request (use my attached photo). Preserve identity and pose. Change ONLY clothing/footwear/accessories. Photorealistic, no logos, match original lighting/shadows, keep background.\n\nOUTFIT (Spring / Date — C2):\n- Outerwear: warm charcoal overcoat.\n- Top: polo shirt in ESPRESSO, matte knit, structured collar, top button open.\n- Bottom: warm graphite trousers, straight-taper.\n- Shoes: dark brown derbies OR loafers (most realistic).\n- Accessory: DEEP TEAL / PETROL scarf (matte, natural drape). No other accessories."
+    },
+    {
+      "name": "autumn_coworking_a0",
+      "user_message": "Try-on request (use my attached photo). Keep my face, hair, beard, body shape, skin tone, and pose unchanged. Change ONLY clothing/footwear. Photorealistic, no logos, match original lighting/shadows, keep original background.\n\nOUTFIT (Autumn / Coworking — A0):\n- Overshirt: warm graphite (warm dark gray), matte, structured shoulders, worn open.\n- T-shirt: IVORY (not pure white), matte, tidy fit (not oversized, not tight).\n- Chinos: DEEP OLIVE, mid/high rise, straight-taper, correct shortened length with no ankle stacking.\n- Shoes: clean WHITE minimalist leather sneakers (very clean, low profile).\n\nQUALITY:\n- Realistic textures (overshirt weave, cotton tee, chinos twill) + natural wrinkles.\n- No body reshaping, no face edits, no extra accessories."
+    },
+    {
+      "name": "autumn_coworking_a1_derbies",
+      "user_message": "Try-on request (use my attached photo). Preserve identity and pose. Change ONLY clothing/footwear. Photorealistic, no logos, match original lighting/shadows, keep background.\n\nOUTFIT (Autumn / Coworking — A1):\n- Overshirt: warm graphite, matte, structured, worn open.\n- T-shirt: TAUPE (warm gray-beige), matte, tidy fit.\n- Chinos: deep olive, mid/high rise, straight-taper, correct length with no ankle stacking.\n- Shoes: DARK BROWN leather DERBIES (matte leather, realistic sole). No sneakers."
+    },
+    {
+      "name": "autumn_coworking_a2_chelsea",
+      "user_message": "Try-on request (use my attached photo). Preserve identity and pose. Change ONLY clothing/footwear. Photorealistic, no logos, match original lighting/shadows, keep background.\n\nOUTFIT (Autumn / Coworking — A2):\n- Overshirt: warm graphite, matte, structured, worn open.\n- T-shirt: IVORY (not pure white).\n- Chinos: deep olive, mid/high rise, straight-taper, correct length with no ankle stacking.\n- Shoes: DARK BROWN leather CHELSEA boots (matte leather, practical sole). No sneakers."
+    },
+    {
+      "name": "autumn_city_b0",
+      "user_message": "Try-on request (use my attached photo). Keep my identity and pose unchanged. Change ONLY clothing/footwear. Photorealistic, no logos, match original lighting/shadows, keep original background.\n\nOUTFIT (Autumn / Casual city — B0):\n- Outerwear: FIELD JACKET in DEEP OLIVE (matte, structured, practical pockets).\n- Mid layer: CAMEL knit sweater (matte, medium-thick knit, clean fit).\n- Jeans: DARK INDIGO (no heavy fading), mid/high rise, straight-taper, correct length without ankle stacking.\n- Shoes: DARK BROWN Chelsea boots (matte leather, practical sole)."
+    },
+    {
+      "name": "autumn_city_b1_polo",
+      "user_message": "Try-on request (use my attached photo). Preserve identity and pose. Change ONLY clothing/footwear. Photorealistic, no logos, match original lighting/shadows, keep background.\n\nOUTFIT (Autumn / Casual city — B1):\n- Outerwear: field jacket in DEEP OLIVE (matte, structured).\n- Top: polo shirt in ESPRESSO (dark warm brown), matte knit, structured collar, 2–3 button placket, top button open (V-line).\n- Jeans: dark indigo, mid/high rise, straight-taper, no ankle stacking.\n- Shoes: dark brown Chelsea boots (matte leather)."
+    },
+    {
+      "name": "autumn_city_b2_rain",
+      "user_message": "Try-on request (use my attached photo). Preserve identity and pose. Change ONLY clothing/footwear/accessories. Photorealistic, no logos, match original lighting/shadows, keep background.\n\nOUTFIT (Autumn / Casual city — B2 Rain):\n- Outerwear: water-resistant jacket in INK-NAVY (matte technical fabric, minimal design, structured shoulders; hood optional).\n- Mid layer: CAMEL knit sweater (matte, medium-thick).\n- Jeans: DARK INDIGO, mid/high rise, straight-taper, correct length without ankle stacking.\n- Shoes: DARK BROWN Chelsea boots (practical sole).\n- Accessory: CAMEL scarf (matte, natural drape). No other accessories."
+    },
+    {
+      "name": "autumn_date_c0",
+      "user_message": "Try-on request (use my attached photo). Keep my identity and pose unchanged. Change ONLY clothing/footwear. Photorealistic, no logos, match original lighting/shadows, keep original background.\n\nOUTFIT (Autumn / Date — C0):\n- Outerwear: WARM CHARCOAL overcoat (matte wool texture, structured shoulders; length around knee or slightly above).\n- Mid layer: CAMEL knit sweater (matte, medium-thick, clean fit).\n- Trousers: WARM GRAPHITE (wool-blend look), mid/high rise, straight-taper.\n- Shoes: DARK BROWN Chelsea boots (matte leather, refined but practical)."
+    },
+    {
+      "name": "autumn_date_c1_inknavy",
+      "user_message": "Try-on request (use my attached photo). Preserve identity and pose. Change ONLY clothing/footwear/accessories. Photorealistic, no logos, match original lighting/shadows, keep background.\n\nOUTFIT (Autumn / Date — C1):\n- Outerwear: warm charcoal overcoat (structured, matte wool).\n- Mid layer: INK-NAVY knit sweater (deep navy, slightly warm, matte).\n- Trousers: warm graphite, mid/high rise, straight-taper.\n- Shoes: dark brown Chelsea boots.\n- Accessory: DEEP TEAL / PETROL scarf (matte, natural drape). No other accessories."
+    },
+    {
+      "name": "autumn_coworking_a0",
+      "user_message": "Try-on request (use my attached photo). Keep my face, hair, beard, body shape, skin tone, and pose unchanged. Change ONLY clothing/footwear. Photorealistic, no logos, match original lighting/shadows, keep original background.\n\nOUTFIT (Autumn / Coworking — A0):\n- Outer layer: structured overshirt in warm graphite (warm dark gray), matte, worn open, clean shoulder line.\n- Underlayer: T-shirt in ivory/ecru (not pure white), matte, tidy fit (not oversized, not tight).\n- Bottom: chinos in deep olive (warm dark olive), mid/high rise, straight-taper, correct length without ankle stacking.\n- Shoes: clean white minimalist leather sneakers (low profile).\n\nQUALITY:\n- Natural fabric textures (overshirt weave, cotton tee, chinos twill), realistic wrinkles.\n- No body reshaping, no face edits, no extra accessories."
+    },
+    {
+      "name": "autumn_coworking_a1_tshirt",
+      "user_message": "Try-on request (use my attached photo). Preserve identity and pose. Change ONLY clothing/footwear. Photorealistic, no logos, match original lighting/shadows, keep background.\n\nOUTFIT (Autumn / Coworking — A1):\n- Overshirt: warm graphite, structured, worn open.\n- T-shirt: taupe/greige (warm gray-beige), matte, tidy fit.\n- Chinos: deep olive, mid/high rise, straight-taper, no ankle stacking.\n- Shoes: clean white minimalist leather sneakers."
+    },
+    {
+      "name": "autumn_coworking_a2_derbies",
+      "user_message": "Try-on request (use my attached photo). Preserve identity and pose. Change ONLY clothing/footwear. Photorealistic, no logos, match original lighting/shadows, keep background.\n\nOUTFIT (Autumn / Coworking — A2):\n- Overshirt: warm graphite, structured, worn open.\n- T-shirt: ivory/ecru (not pure white).\n- Chinos: deep olive, mid/high rise, straight-taper, correct length.\n- Shoes: dark brown leather derbies (matte leather, realistic sole). No white sneakers."
+    },
+    {
+      "name": "autumn_coworking_a3_chelsea",
+      "user_message": "Try-on request (use my attached photo). Preserve identity and pose. Change ONLY clothing/footwear. Photorealistic, no logos, match original lighting/shadows, keep background.\n\nOUTFIT (Autumn / Coworking — A3):\n- Overshirt: warm graphite, structured, worn open.\n- T-shirt: ivory/ecru (not pure white).\n- Chinos: deep olive, mid/high rise, straight-taper, correct length.\n- Shoes: dark brown Chelsea boots (matte leather, practical sole). No sneakers."
+    },
+    {
+      "name": "autumn_city_b0",
+      "user_message": "Try-on request (use my attached photo). Keep my identity and pose unchanged. Change ONLY clothing/footwear. Photorealistic, no logos, match original lighting/shadows, keep original background.\n\nOUTFIT (Autumn / Casual city — B0):\n- Outerwear: field jacket in deep olive (matte, structured, practical pockets).\n- Mid layer: camel knit sweater (matte, medium-thick knit, clean fit).\n- Bottom: dark indigo jeans (no heavy fading), mid/high rise, straight-taper, correct length without ankle stacking.\n- Shoes: dark brown Chelsea boots (matte leather, practical sole)."
+    },
+    {
+      "name": "autumn_city_b1_polo",
+      "user_message": "Try-on request (use my attached photo). Preserve identity and pose. Change ONLY clothing/footwear. Photorealistic, no logos, match original lighting/shadows, keep background.\n\nOUTFIT (Autumn / Casual city — B1):\n- Field jacket: deep olive, matte, structured.\n- Top: polo shirt in espresso (dark warm brown), matte knit, structured collar, top button open.\n- Jeans: dark indigo, mid/high rise, straight-taper, no ankle stacking.\n- Shoes: dark brown Chelsea boots (matte leather)."
+    },
+    {
+      "name": "autumn_city_b2_scarf",
+      "user_message": "Try-on request (use my attached photo). Preserve identity and pose. Change ONLY clothing/footwear/accessories. Photorealistic, no logos, match original lighting/shadows, keep background.\n\nOUTFIT (Autumn / Casual city — B2):\n- Field jacket: deep olive.\n- Camel knit sweater.\n- Dark indigo jeans, straight-taper, correct length.\n- Dark brown Chelsea boots.\n- Accessory: camel scarf (matte, natural drape). No other accessories."
+    },
+    {
+      "name": "autumn_city_b3_rain",
+      "user_message": "Try-on request (use my attached photo). Preserve identity and pose. Change ONLY clothing/footwear. Photorealistic, no logos, match original lighting/shadows, keep background.\n\nOUTFIT (Autumn / Casual city — B3 Rain):\n- Outerwear: water-resistant jacket (clean minimal design, matte technical fabric) in deep olive OR ink-navy; structured shoulders, practical hood optional.\n- Mid layer: camel knit sweater.\n- Bottom: dark indigo jeans, mid/high rise, straight-taper, correct length.\n- Shoes: dark brown Chelsea boots (practical sole)."
+    },
+    {
+      "name": "autumn_date_c0",
+      "user_message": "Try-on request (use my attached photo). Keep my identity and pose unchanged. Change ONLY clothing/footwear. Photorealistic, no logos, match original lighting/shadows, keep original background.\n\nOUTFIT (Autumn / Date — C0):\n- Outerwear: warm charcoal overcoat (matte wool texture, structured shoulders; length around knee or slightly above).\n- Mid layer: camel knit sweater (matte, medium-thick, clean fit).\n- Bottom: trousers in warm graphite (wool-blend look), mid/high rise, straight-taper.\n- Shoes: dark brown Chelsea boots (matte leather, refined but practical)."
+    },
+    {
+      "name": "autumn_date_c1_inknavy",
+      "user_message": "Try-on request (use my attached photo). Preserve identity and pose. Change ONLY clothing/footwear. Photorealistic, no logos, match original lighting/shadows, keep background.\n\nOUTFIT (Autumn / Date — C1 Contrast knit):\n- Warm charcoal overcoat (structured, matte wool).\n- Knit sweater in ink-navy (deep warm navy, matte).\n- Warm graphite trousers, mid/high rise, straight-taper.\n- Dark brown Chelsea boots."
+    },
+    {
+      "name": "autumn_date_c2_scarf",
+      "user_message": "Try-on request (use my attached photo). Preserve identity and pose. Change ONLY clothing/footwear/accessories. Photorealistic, no logos, match original lighting/shadows, keep background.\n\nOUTFIT (Autumn / Date — C2 with scarf):\n- Warm charcoal overcoat.\n- Camel knit sweater.\n- Warm graphite trousers, straight-taper.\n- Dark brown Chelsea boots.\n- Accessory: scarf in deep teal/petrol (matte, natural drape). No other accessories."
+    },
+    {
+      "name": "summer_coworking_1",
+      "user_message": "Try-on request (use my attached photo). Keep my face, hair, beard, body shape, and pose unchanged. Change ONLY clothing/footwear.\n\nOUTFIT (Summer / Coworking):\n- Top: polo shirt in muted teal / petrol (deep muted teal, matte knit), structured collar, 2–3 button placket, top button open.\n- Bottom: chinos in stone/greige (warm light gray-beige), mid/high rise, straight-taper, correct shorter length with no stacking at the ankle (no-break or very slight break).\n- Shoes: clean white minimalist leather sneakers (low profile).\n- Accessories: none.\n\nREALISM NOTES:\n- Photorealistic fabric textures, natural wrinkles, correct seams.\n- Match the lighting and shadows of my original photo.\n- Do not add logos."
+    },
+    {
+      "name": "summer_coworking_1a_premium",
+      "user_message": "Try-on request (use my attached photo). Keep my face, hair, beard, body shape, and pose unchanged. Change ONLY clothing/footwear.\n\nOUTFIT (Summer / Coworking — premium variant):\n- Top: polo shirt in espresso (dark warm brown), matte knit, structured collar, 2–3 button placket, top button open.\n- Bottom: chinos in stone/greige (warm light gray-beige), mid/high rise, straight-taper, correct shorter length with no ankle stacking.\n- Shoes: clean white minimalist leather sneakers.\n- Accessories: dark brown leather belt (match warm dark brown tone).\n\nREALISM NOTES:\n- Keep background the same; only minimal cleanup if needed.\n- No logos, no extra items."
+    },
+    {
+      "name": "summer_city_2",
+      "user_message": "Try-on request (use my attached photo). Preserve my identity and proportions. Change ONLY clothing/footwear.\n\nOUTFIT (Summer / Casual city):\n- Top: heavyweight cotton T-shirt in olive (matte, 220–260 gsm), clean shoulder line, not oversized, not tight.\n- Bottom: dark indigo jeans (no heavy fading), mid/high rise, straight-taper, properly shortened length without stacking at the ankle (near no-break).\n- Shoes: clean white minimalist leather sneakers.\n\nREALISM NOTES:\n- Natural streetwear drape and wrinkles.\n- Match original lighting/shadows and perspective.\n- No logos."
+    },
+    {
+      "name": "summer_city_2a_ivory",
+      "user_message": "Try-on request (use my attached photo). Preserve my identity and proportions. Change ONLY clothing/footwear.\n\nOUTFIT (Summer / Casual city — lighter top variant):\n- Top: heavyweight cotton T-shirt in ivory/ecru (not pure white), matte, clean fit.\n- Bottom: dark indigo jeans, mid/high rise, straight-taper, shortened length without ankle stacking.\n- Shoes: clean white minimalist leather sneakers.\n\nREALISM NOTES:\n- Keep the background unchanged.\n- No logos."
+    },
+    {
+      "name": "summer_date_3",
+      "user_message": "Try-on request (use my attached photo). Keep my face, hair, beard, body shape, and pose unchanged. Change ONLY clothing/footwear/accessories.\n\nOUTFIT (Summer / Date):\n- Top: polo shirt in espresso (dark warm brown), matte knit, structured collar, 2–3 button placket, top button open for a V-line.\n- Bottom: chinos in stone/greige (warm light gray-beige), mid/high rise, straight-taper, correct length with no ankle stacking (slight break is ok).\n- Shoes: dark brown leather loafers OR dark brown leather derbies (choose the most realistic for my stance).\n- Accessories: dark brown leather belt matching the shoes.\n\nREALISM NOTES:\n- Photorealistic textures, refined but natural look.\n- Match original lighting/shadows; keep background the same.\n- No logos."
+    },
+    {
+      "name": "summer_date_3a_oxford",
+      "user_message": "Try-on request (use my attached photo). Preserve my identity and proportions. Change ONLY clothing/footwear/accessories.\n\nOUTFIT (Summer / Date — Oxford variant):\n- Top: oxford shirt in ecru/ivory (not pure white), collar open (1–2 buttons undone) to create a V-line; sleeves can be lightly rolled to mid-forearm.\n- Bottom: chinos stone/greige, mid/high rise, straight-taper, correct length without ankle stacking.\n- Shoes: dark brown leather loafers OR dark brown leather derbies.\n- Accessories: dark brown leather belt matching the shoes.\n\nREALISM NOTES:\n- Keep everything photorealistic; no logos."
+    },
+    {
+      "name": "summer_date_3b_evening_overshirt",
+      "user_message": "Try-on request (use my attached photo). Preserve my identity and proportions. Change ONLY clothing/footwear/accessories.\n\nOUTFIT (Summer / Date — evening layer variant):\n- Base top: polo in espresso (dark warm brown), matte knit, structured collar, top button open.\n- Layer: lightweight overshirt worn open, color warm graphite OR espresso (matte, structured enough to hold shape).\n- Bottom: chinos stone/greige, mid/high rise, straight-taper, correct length without ankle stacking.\n- Shoes: dark brown leather loafers OR derbies.\n- Accessories: dark brown leather belt matching the shoes.\n\nREALISM NOTES:\n- Realistic layering at collar/hem; keep original background; no logos."
+    }
+  ]
+}
